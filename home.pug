@@ -1,0 +1,108 @@
+div.content(flex layout="column" layout-align="start center")
+  div.trading-form(flex layout="row" layout-align="center")
+    div.form-wrap
+      div.trade-start(layout="column" layout-align="space-around")
+        div.heading(layout="row" layout-align="center center" layout-align-xs="start center")
+          img(src="~images/country.png")
+          div(layout="row" layout-align="center center")
+            h2
+              | {{'home.Destination_country' | translate}}
+
+        div(layout="column")
+          md-autocomplete(
+            md-selected-item="model.country"
+            md-search-text-change="countryQuerySearch(countrySearchText)"
+            md-search-text="countrySearchText"
+            md-items="country in countryQuerySearch(countrySearchText)"
+            md-item-text="country.name"
+            md-min-length="0")
+            md-item-template(md-highlight-text='countrySearchText' md-highlight-flags='^i')
+              | {{country.name}}
+            md-not-found
+              | No countries matching "{{countrySearchText}}" were found.
+
+        div.home-filter-currency
+          div.pills(layout="row" layout-align="space-between center")
+            span.pill(
+              ng-repeat="currency in filters.currency"
+              ng-click="selectFilterCurrency(currency[1])"
+              ng-class="{ selected: model.country.currency_code === currency[0]}")
+              | {{ currency[0] }}
+
+        div.spacer-vertical-m
+
+        div.heading(layout="row" layout-align="center center" layout-align-xs="start center")
+          img(src="~images/give.png")
+          div(layout="row" layout-align="center center")
+            h2
+              | {{ "home.Give" | translate }}
+        currency-input(
+          model="model.amountGive"
+          country="model.country"
+          is-crypto="model.isCrypto"
+          keyup-listener="setGive()"
+          payment-limits="paymentLimits"
+          method="model.method")
+
+        div.swapper(layout="row" layout-align="center center" ng-class="{'swapped': swapped}")
+          div
+            img(src="~images/swap.png" ng-click="swap()")
+            md-tooltip(md-direction="right") {{ 'home.Swap' | translate }}
+
+        div.spacer-vertical-m
+
+        div.heading(layout="row" layout-align="center center" layout-align-xs="start center")
+          img(src="~images/get.png")
+          div(layout="row" layout-align="center center")
+            h2
+              | {{ "home.Get" | translate }}
+
+        currency-input(
+          model="model.amountGet"
+          country="model.country"
+          is-crypto="!model.isCrypto"
+          keyup-listener="setGet()"
+          payment-limits="paymentLimits"
+          method="model.method")
+
+
+        div.textlabel(layout="row")
+          md-select(
+            flex
+            aria-label="method"
+            ng-model="model.method"
+            ng-change="onMethodChange()")
+            md-option(
+              ng-repeat="method in methods"
+              ng-value="method.label") {{ method.name }}
+
+        div.proceed(layout="row" layout-align="center")
+          md-button(
+            layout="row"
+            layout-align="end center"
+            ng-click="openMethod()"
+            aria-label="{{'home.Start_trade' | translate}}"
+            ng-disabled="!model || tradesLoading")
+            span(layout-fill)
+              | {{ 'common.Next' | translate }}
+            img(src="~images/button_arrow.png")
+
+        div.switch-advanced(layout="row" layout-align="center")
+          a(ui-sref="advanced.main")
+            | {{ 'home.Advanced_trade_view' | translate }}
+
+    div.marketing-wrap(hide show-gt-sm)
+      div.marketing-box(layout="column" layout-align="start start")
+        hr
+        h1(ng-bind-html="'home.Marketing_line_1' | translate")
+        h3(ng-bind-html="'home.Marketing_line_2' | translate")
+        md-button(ui-sref="static({slug: 'faq'})")
+          | {{'home.how_it_works' | translate}}
+
+  div.check(layout="column" layout-align="center center")
+    h1
+      | {{ 'home.Private_fast_convenient' | translate }}
+    md-button(layout="row" layout-align="center center" ui-sref="static({slug: 'faq'})")
+      span(layout-fill)
+        | {{'home.See_how' | translate}}
+      img(src="~images/button_circle.png")

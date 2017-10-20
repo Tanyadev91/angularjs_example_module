@@ -1,0 +1,20 @@
+div.currencyInput
+  form(name="amountForm" layout="row" layout-align="center center")
+
+    md-input-container(layout-fill)
+      input(
+        aria-label="amount"
+        name="amountInputField"
+        type="number"
+        ng-model="model"
+        ng-model-options="{allowInvalid: false}"
+        ng-min="limits.min"
+        ng-max="limits.max")
+
+    div.amount-label
+      span(ng-if="!isCrypto") {{country.currency_code || 'EUR'}}
+      span(ng-if="isCrypto") {{crypto.id || 'BTC'}}
+
+    div.minmax(layout="column" layout-align="center center")
+      div.text-center(ng-class="{error: amountForm.$error.min}") Min. {{ limits.min || 0.01 }}
+      div.text-center(ng-class="{error: amountForm.$error.max}") Max. {{ limits.max || 10 }}

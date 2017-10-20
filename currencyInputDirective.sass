@@ -1,0 +1,74 @@
+@import "app/styles/_variables"
+@import "app/styles/_mixins"
+
+$error-color: $red-danger
+
+.currencyInput
+  padding: 2px
+  background-color: transparent
+  border-radius: 50px
+  border: 0px
+  font-size: 1.1em
+  color: $grey
+
+  md-input-container
+    padding: 0
+
+    .md-input
+      padding: 0
+
+  .minmax
+    font-size: 0.65em
+    min-width: 62px
+    white-space: nowrap
+
+  > div
+      white-space: nowrap
+
+  .error
+    color: $red-danger
+
+  .amount-label
+    margin: 0px 10px
+    padding: 2px 2px 0 2px
+    border-bottom: 2px solid transparent
+
+  md-input-container
+    margin: 0
+
+    & .md-input,
+    &.md-default-theme .md-input
+      color: $grey
+      border-color: $bordergrey
+      text-align: center
+
+      &.ng-invalid
+        color: $error-color
+
+  [ng-message]:not(.md-char-counter),
+  [ng-messages]:not(.md-char-counter),
+  ng-message:not(.md-char-counter),
+  ng-messages:not(.md-char-counter)
+    color: #F44336
+
+  [ng-messages],
+  [ng-message],
+    font-size: 12px
+    line-height: 14px
+    overflow: hidden
+    opacity: 1
+    margin-top: 0
+    padding-top: 5px
+
+  .md-errors-spacer
+    min-height: 0px
+
+.mobile
+  .currencyInput
+
+  .amount-label
+    margin: 0px
+    padding: 2px
+    padding-bottom: 0
+
+
